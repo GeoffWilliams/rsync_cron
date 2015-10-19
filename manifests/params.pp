@@ -1,4 +1,4 @@
-class rsync::params {
+class rsync_cron::params {
   $user  = "rsync"
   $group = $user
   $mode  = "0700"

@@ -5,11 +5,11 @@
 # [*keyfile*]
 #   Path to public ssh key on 
 
-define rsync::agent(
-    $local_user  = $rsync::params::user,
-    $local_dirs  = [ $rsync::params::dir ],
-    $remote_user = $rsync::params::user,
-    $remote_dir  = $rsync::params::dir,
+define rsync_cron::agent(
+    $local_user  = $rsync_cron::params::user,
+    $local_dirs  = [ $rsync_cron::params::dir ],
+    $remote_user = $rsync_cron::params::user,
+    $remote_dir  = $rsync_cron::params::dir,
     $host        = $title,
     $key_file,
     $hour     = "*/4",
@@ -21,18 +21,18 @@ define rsync::agent(
 
   $_local_dirs = join($local_dirs, " ")
 
-  cron { logrotate,
+  cron { "cron_rsync_${title}":
     command  => "ping -c ${host} && rsync -avz -e 'ssh -l ${remote_user} -i ${key_file}' ${_local_dir} ${remote_user}@${host}:${remote_dir}",
-    user     => $user,
-    hour     => $hour,
-    minute   => $minute,
-    month    => $month,
-    monthday => $monthday,
-    weekday  => $weekday,
-    path     => [ "/bin", "/usr/bin"],
+    user         => $local_user,
+    hour         => $hour,
+    minute       => $minute,
+    month        => $month,
+    monthday     => $monthday,
+    weekday      => $weekday,
+    environment  => "PATH=/bin:/usr/bin",
   }
 
-  sshkeys::install_keypair { "${user}@${fqdn}": 
+  sshkeys::install_keypair { "${local_user}@${fqdn}": 
     user => $user,
   }
 
