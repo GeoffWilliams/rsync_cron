@@ -10,7 +10,7 @@ define rsync::agent(
     $local_dirs  = [ $rsync::params::dir ],
     $remote_user = $rsync::params::user,
     $remote_dir  = $rsync::params::dir,
-    $host,
+    $host        = $title,
     $key_file,
     $hour     = "*/4",
     $minute   = "*",

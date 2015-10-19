@@ -1,10 +1,10 @@
 define rsync::host(
-    $incoming_dirs = $rsync::params::dir,
-    $authorized_keys,
-    $user     = $rsync::params::user,
-    $group    = $rsync::params::group,
-    $mode     = $rsync::params::mode,
-    $home_dir = "/home/${user}",
+    $incoming_dirs   = $rsync::params::dir,
+    $authorized_keys = $title,
+    $user            = $rsync::params::user,
+    $group           = $rsync::params::group,
+    $mode            = $rsync::params::mode,
+    $home_dir        = "/home/${user}",
 ) {
 
   # directory to hold rsync'ed files
