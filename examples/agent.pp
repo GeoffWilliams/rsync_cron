@@ -4,6 +4,7 @@ include rsync_cron::params
 # simulate
 sshkeys::ssh_keygen { "rsync@${::fqdn}": }
 
-rsync_cron::agent { "demo":
-  key_file => "rsync@${::fqdn}",
+rsync_cron::agent { $fqdn:
+  local_dirs => ["/tmp/abc"],
+  key_file   => "/home/rsync/.ssh/rsync@${::fqdn}",
 }
