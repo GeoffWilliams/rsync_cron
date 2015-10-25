@@ -13,11 +13,11 @@ define rsync_cron::agent(
     $log_file    = $rsync_cron::params::log_file,
     $host        = $title,
     $key_file,
-    $hour     = "*/4",
-    $minute   = "*",
-    $month    = "*",
-    $monthday = "*",
-    $weekday  = "*",
+    $hour     = $rsync_cron::params::cron_hour,
+    $minute   = $rsync_cron::params::cron_all,
+    $month    = $rsync_cron::params::cron_all,
+    $monthday = $rsync_cron::params::cron_all,
+    $weekday  = $rsync_cron::params::cron_all,
 ) {
   
   # if you get a duplicate resource error here you need to write to a separate
