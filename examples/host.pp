@@ -1,5 +1,5 @@
 include sshkeys::params
-include rsync_cron::params
+include rsync_cron
 host { $fqdn:
   ip => $ipaddress,
 }
