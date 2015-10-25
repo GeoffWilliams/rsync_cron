@@ -14,7 +14,7 @@ define rsync_cron::agent(
     $host        = $title,
     $key_file,
     $hour     = $rsync_cron::params::cron_hour,
-    $minute   = $rsync_cron::params::cron_all,
+    $minute   = fqdn_rand(59),
     $month    = $rsync_cron::params::cron_all,
     $monthday = $rsync_cron::params::cron_all,
     $weekday  = $rsync_cron::params::cron_all,
