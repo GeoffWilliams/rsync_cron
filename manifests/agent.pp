@@ -50,6 +50,6 @@ define rsync_cron::agent(
     user => $remote_user,
   }
 
-  sshkeys::authorized_keys { "${local_user}@${host}":}
+  sshkeys::known_host { "${local_user}@${host}":}
 
 }
