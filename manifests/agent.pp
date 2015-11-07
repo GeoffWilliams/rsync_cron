@@ -37,14 +37,18 @@ define rsync_cron::agent(
   $_local_dirs = join(any2array($local_dirs), " ")
   $rsync_cmd = "rsync -avzu -e 'ssh -l ${remote_user} -i ${key_file}' "
 
+  file { $_local_dirs:
+    ensure => directory,
+  }
+
   if $download {
-    $_download = "${rsync_cmd} ${_local_dirs} ${remote_user}@${host}:${remote_dir} >> ${log_file}"
+    $_download = "${rsync_cmd} ${_local_dirs} ${remote_user}@${host}:${remote_dir} >> ${log_file} 2>&1"
   } else {
     $_download = "true"
   }
 
   if $upload {
-    $_upload = "${rsync_cmd} ${remote_user}@${host}:${remote_dir} ${_local_dirs} >> ${log_file}"
+    $_upload = "${rsync_cmd} ${remote_user}@${host}:${remote_dir} ${_local_dirs} >> ${log_file} 2>&1"
   } else {
     $_upload = "true"
   }
