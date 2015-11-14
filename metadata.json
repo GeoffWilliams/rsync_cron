@@ -1,6 +1,6 @@
 {
   "name": "geoffwilliams-rsync_cron",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Geoff Williams<geoff.williams@puppetlabs.com>",
   "summary": "Periodically run rsync invoked by cron",
   "license": "Apache-2.0",

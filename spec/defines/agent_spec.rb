@@ -25,7 +25,7 @@ describe 'rsync_cron::agent', :type => :define do
     end
     let :params do
       {
-        :local_dir => "/tmp/abc",
+        :host => "ftp.localdomain",
       }
     end 
     it { should compile }
