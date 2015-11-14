@@ -1,0 +1,13 @@
+fixtures:
+  forge_modules:
+    staging:
+      repo: "geoffwilliams-sshkeys"
+      ref: "0.1.0"
+    stdlib:
+      repo: "puppetlabs-stdlib"
+      ref: "4.9.0"
+    concat:
+      repo: "puppetlabs-concat"
+      ref: "1.2.4"
+  symlinks:
+    'rsync_cron': '#{source_dir}'

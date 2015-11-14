@@ -15,33 +15,32 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+Manage a cron job to periodically rsync a directory between two computers.  sync direction can be in any or both directions.
+
+Rsync+ssh is used to avoid the need for a dedicated rsync service
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
+This module uses ssh and rsync to install a cron job to periodically sync directories between hosts.  This is ideal for syncronising large directories of flies on a regular basis.  Alternatively, this can also be used for machines such as laptops that are not always in reach of the systems they need to sync to.
 
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+A brief log file is also created for debugging purposes.
 
 ## Setup
 
 ### What rsync_cron affects
 
-* A list of files, packages, services, or operations that the module will alter,
+* Manages a cron job to sync remote to local, local to remote or bi-directionally (by running both sync jobs sequentially)
   impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* Doesn't handle deleted files (`--delete`)
+* Skips overwriting files that are newer (`-u`)
+* Only attempts to run rsync if the remote destination is online, as detected by the `ping` command
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+* SSH keys need to exist on the Puppet Master already, this module just copies them
+* SSH needs to be enabled on the host you are connecting to, on the standard port
+* cron and rsync packages should already be installed
+
 
 ### Beginning with rsync_cron
 
@@ -58,22 +57,15 @@ the fancy stuff with your module here.
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+* `rsync_cron` - Dummy class to get `rsync_cron::params` class into scope
+* `rsync_cron::params` - Params pattern class
+* `rsync_cron::host` - Setup a host to receive connections via rsync+ssh
+* `rsync_cron::agent` - Setup a cron job to periodically rsync files to and or from another node that has had `rsync_cron::host` applied to it
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Tested on Ubuntu, will probably work elsewhere but untested.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+PRs accepted
