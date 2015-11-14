@@ -38,23 +38,29 @@ A brief log file is also created for debugging purposes.
 
 ### Setup Requirements
 
-* SSH keys need to exist on the Puppet Master already, this module just copies them
+* SSH keys need to exist on the Puppet Master already, this module just copies them, however, you could use the [sshkeys](https://forge.puppetlabs.com/geoffwilliams/sshkeys) module to generate them
 * SSH needs to be enabled on the host you are connecting to, on the standard port
-* cron and rsync packages should already be installed
-
-
-### Beginning with rsync_cron
-
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+* cron and rsync packages must already be installed
+* machines you want to rsync between must be able to ping each other
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+### Setting up the machine to receive the SSH connection
+```puppet
+rsync_cron::host { "rsync@mylaptop.localdomain": }
+```
+Setup the node classified with this resource to accept a connection using the public key found on the Puppet Master in the `/etc/sshkeys/rsync@mylaptop.localdomain.pub` file
+
+
+### Setting up a machine to run the rsync command
+```puppet
+rsync_cron::agent { "rsync@${::fqdn}":
+  host => "ftp.localdomain",
+}
+```
+Manage a cron job on the node classified with this resource.  Targets a local user `rsync`.  Files will be rsync'ed to/from `ftp.localdomain`
+
+This example is geared around SSH keys generated with the [sshkeys](https://forge.puppetlabs.com/geoffwilliams/sshkeys) module.  It is possible to override the this mechanism by specifying the `key_file` parameter.  See source code for details. 
 
 ## Reference
 

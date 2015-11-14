@@ -5,6 +5,8 @@
 #
 # Parameters
 # ==========
+# [*host*]
+#   remote host to SSH into when copying files with rsync
 # [*key_file*]
 #   if not using sshkeys module to generate SSH keys, you can specify an SSH
 #   key file to use for the rsync command.  SSH key specified must alread exit
@@ -23,8 +25,6 @@
 #   remote directory to rsync files to/from
 # [*log_file*]
 #   log file to write debug the output of the cronjob to (for debugging)
-# [*host*]
-#   remote host to SSH into when copying files with rsync
 # [*hour*]
 #   hour field for crontab entry
 # [*minute*]
@@ -41,6 +41,7 @@
 # [*upload*]
 #   true to upload files to $host every time the cronjob runs, otherwise false
 define rsync_cron::agent(
+    $host,
     $key_file     = false,
     $key_name     = $title,
     $local_user   = $rsync_cron::params::user,
@@ -48,7 +49,6 @@ define rsync_cron::agent(
     $remote_user  = $rsync_cron::params::user,
     $remote_dir   = $rsync_cron::params::dir,
     $log_file     = $rsync_cron::params::log_file,
-    $host         = $title,
     $hour         = $rsync_cron::params::cron_hour,
     $minute       = fqdn_rand(59),
     $month        = $rsync_cron::params::cron_all,
