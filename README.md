@@ -1,4 +1,5 @@
 # rsync_cron
+[![Build Status](https://travis-ci.org/GeoffWilliams/rsync_cron.svg)](https://travis-ci.org/GeoffWilliams/rsync_cron)
 
 #### Table of Contents
 
